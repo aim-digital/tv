@@ -1,0 +1,1 @@
+export postCollection from './postCollection';

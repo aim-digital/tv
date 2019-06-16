@@ -4,5 +4,8 @@
   "scripts": {
     "postinstall": "boilerplate install --bundle $npm_package_name && boilerplate migrate up --bundle $npm_package_name",
     "uninstall": "boilerplate uninstall --bundle $npm_package_name"
+  },
+  "dependencies": {
+    "react-share": "^1.19.1"
   }
 }
