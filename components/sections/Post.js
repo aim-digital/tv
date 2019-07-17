@@ -11,7 +11,7 @@ const { FacebookShareButton, TwitterShareButton, EmailShareButton } = ShareButto
 
 const RE_ANCHOR_MARKDOWN = /\[([^\]]*)\]\(([^\s|\)]*)(?:\s"([^\)]*)")?\)/g;
 
-const CONTENT_NEWSLETTER = 'Join the VTTV newsletter for project management tips, industry trends, free software, and more.';
+const CONTENT_NEWSLETTER = 'Join the AIM™ TV newsletter for project management tips, industry trends, free-to-use software, and more.';
 
 @connect(state => ({post: state['@boilerplatejs/contentful'].Entry.post}), {create})
 
@@ -83,17 +83,17 @@ export default class extends Section {
   renderShare() {
     const { post } = this.props;
     const { id, slug } = post;
-    const url = `https://vitruvian.tech/post/${slug}/${id}`;
+    const url = `https://aimdigital.media/tv/${slug}/${id}`;
 
     return (<div className="share">
       <FacebookShareButton url={`${url}`}>
-        <img src="/@vitruviantech/web/images/facebook.png" />
+        <img src="/@aim-digital/web/images/facebook.png" />
       </FacebookShareButton>
       <TwitterShareButton url={`${url}`}>
-        <img src="/@vitruviantech/web/images/twitter.png" />
+        <img src="/@aim-digital/web/images/twitter.png" />
       </TwitterShareButton>
       <EmailShareButton url={`${url}`} subject={`\<VitruvianTech\> ${post.title}`} body={`${post.summary}\n\n${url}\n\n`}>
-        <img src="/@vitruviantech/web/images/email.png" />
+        <img src="/@aim-digital/web/images/email.png" />
       </EmailShareButton>
     </div>);
   }
@@ -144,7 +144,7 @@ export default class extends Section {
         </article>
         {this.renderShare()}
         <p className="text-center humility">
-          <small>© 2019 VitruvianTech (subsidiary of Vitruvian Holdings, LLC.)</small>
+          <small>© American Interactive Media (A VitruvianTech® Company)</small>
         </p>
         <br />
       </Section>

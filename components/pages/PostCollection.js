@@ -1,9 +1,9 @@
 import React from 'react';
 import {asyncConnect} from 'redux-async-connect-react16';
 import {connect} from 'react-redux';
-import {Page} from '@vitruviantech/web/components/layout';
+import {Page} from '@aim-digital/web/components/layout';
 import {posts} from '@boilerplatejs/contentful/actions/Entry';
-import {postCollection} from '@vitruviantech/tv/data';
+import {postCollection} from '@aim-digital/tv/data';
 
 const getHeroImage = hero => hero.file ? hero.file.url : hero.url;
 
@@ -21,19 +21,19 @@ const getHeroImage = hero => hero.file ? hero.file.url : hero.url;
 
   return {
     className: 'post',
-    title: title ? `${title} - VitruvianTech TV` : 'VitruvianTech TV',
+    title: title ? `${title} - AIM™ TV` : 'AIM™ TV',
     meta: [
       {name: 'description', content: title},
       {property: 'og:type', content: 'article'},
-      {property: 'og:url', content: slug ? `https://vitruvian.tech/tv/${slug}` : `https://vitruvian.tech/tv`},
+      {property: 'og:url', content: slug ? `https://aimdigital.media/tv/${slug}` : `https://aimdigital.media/tv`},
       {property: 'og:title', content: title},
       {property: 'og:description', content: summary},
-      {property: 'og:image:secure_url', content: hero ? getHeroImage(hero) : 'https://s3.amazonaws.com/vitruvian-tech/cover.jpg'},
-      {property: 'og:image', content: hero ? getHeroImage(hero) : 'https://s3.amazonaws.com/vitruvian-tech/cover.jpg'},
+      {property: 'og:image:secure_url', content: hero ? getHeroImage(hero) : 'https://aimdigital.media/@aim-digital/web/images/logo.png'},
+      {property: 'og:image', content: hero ? getHeroImage(hero) : 'https://aimdigital.media/@aim-digital/web/images/logo.png'},
       {property: 'twitter:card', content: 'article'},
       {property: 'twitter:title', content: title},
       {property: 'twitter:description', content: summary},
-      {property: 'twitter:image', content: hero ? getHeroImage(hero) : 'https://s3.amazonaws.com/vitruvian-tech/cover.jpg'}
+      {property: 'twitter:image', content: hero ? getHeroImage(hero) : 'https://aimdigital.media/@aim-digital/web/images/logo.png'}
     ]
   };
 })

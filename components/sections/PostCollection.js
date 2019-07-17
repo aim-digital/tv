@@ -5,14 +5,14 @@ import {ShareButtons} from 'react-share';
 import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
 import {create} from '@boilerplatejs/core/actions/Contact';
-import {postCollection} from '@vitruviantech/tv/data';
+import {postCollection} from '@aim-digital/tv/data';
 import * as forms from '@boilerplatejs/core/components/forms';
 
 const { FacebookShareButton, TwitterShareButton, EmailShareButton } = ShareButtons;
 
 const RE_ANCHOR_MARKDOWN = /\[([^\]]*)\]\(([^\s|\)]*)(?:\s"([^\)]*)")?\)/g;
 
-const CONTENT_NEWSLETTER = 'Join the VTTV newsletter for project management tips, industry trends, free software, and more.';
+const CONTENT_NEWSLETTER = 'Join the AIM™ TV newsletter for project management tips, industry trends, free-to-use software, and more.';
 
 @connect(state => ({collection: state['@boilerplatejs/contentful'].Entry.collection}), {create})
 
@@ -58,17 +58,17 @@ export default class extends Section {
     let { collection } = this.props;
     collection = { ...postCollection, ...collection };
     const { slug } = collection;
-    const url = slug ? `https://vitruvian.tech/posts/${slug}` : `https://vitruvian.tech/posts`;
+    const url = slug ? `https://aimdigital.media/tv/${slug}` : `https://aimdigital.media/tv`;
 
     return (<div className="share">
       <FacebookShareButton url={`${url}`}>
-        <img src="/@vitruviantech/web/images/facebook.png" />
+        <img src="/@aim-digital/web/images/facebook.png" />
       </FacebookShareButton>
       <TwitterShareButton url={`${url}`}>
-        <img src="/@vitruviantech/web/images/twitter.png" />
+        <img src="/@aim-digital/web/images/twitter.png" />
       </TwitterShareButton>
       <EmailShareButton url={`${url}`} subject={`\<VitruvianTech\> ${collection.title}`} body={`${collection.summary}\n\n${url}\n\n`}>
-        <img src="/@vitruviantech/web/images/email.png" />
+        <img src="/@aim-digital/web/images/email.png" />
       </EmailShareButton>
     </div>);
   }
@@ -91,7 +91,7 @@ export default class extends Section {
         </article>
         {this.renderShare()}
         <p className="text-center humility">
-          <small>© 2018 Vitruvian Technology, Corp. (subsidiary of Vitruvian Holdings, LLC.)</small>
+          <small>© American Interactive Media (A VitruvianTech® Company)</small>
         </p>
         <br />
       </Section>

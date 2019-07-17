@@ -49,30 +49,30 @@ export default class {
     try {
         await Page.create({
             route: 'tv/:title/:date/:id',
-            page: '@vitruviantech/tv:Post',
-            headers: '["@vitruviantech/tv:Post"]',
-            sections: '["@vitruviantech/tv:Post"]'
+            page: '@aim-digital/tv:Post',
+            headers: '["@aim-digital/tv:Post"]',
+            sections: '["@aim-digital/tv:Post"]'
         });
 
         await Page.create({
             route: 'tv(/:collection)',
-            page: '@vitruviantech/tv:PostCollection',
-            headers: '["@vitruviantech/tv:Post"]',
-            sections: '["@vitruviantech/tv:PostCollection"]'
+            page: '@aim-digital/tv:PostCollection',
+            headers: '["@aim-digital/tv:Post"]',
+            sections: '["@aim-digital/tv:PostCollection"]'
         });
     } catch (e) {
         await Page.update({
             route: 'tv/:title/:date/:id',
-            page: '@vitruviantech/tv:Post',
-            headers: '["@vitruviantech/tv:Post"]',
-            sections: '["@vitruviantech/tv:Post"]'
+            page: '@aim-digital/tv:Post',
+            headers: '["@aim-digital/tv:Post"]',
+            sections: '["@aim-digital/tv:Post"]'
         }, { where: { route: 'tv/:title/:date/:id' } });
 
         await Page.update({
             route: 'tv(/:collection)',
-            page: '@vitruviantech/tv:PostCollection',
-            headers: '["@vitruviantech/tv:Post"]',
-            sections: '["@vitruviantech/tv:PostCollection"]'
+            page: '@aim-digital/tv:PostCollection',
+            headers: '["@aim-digital/tv:Post"]',
+            sections: '["@aim-digital/tv:PostCollection"]'
         }, { where: { route: 'tv(/:collection)' } });
     }
   }

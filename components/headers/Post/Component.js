@@ -1,9 +1,9 @@
 import React from 'react';
 import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
-import {Header} from '@vitruviantech/web/components/layout';
+import {Header} from '@aim-digital/web/components/layout';
 import moment from 'moment';
-import {postCollection} from '@vitruviantech/tv/data';
+import {postCollection} from '@aim-digital/tv/data';
 
 const getHeroImage = hero => hero.file ? hero.file.url : hero.url;
 
