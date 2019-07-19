@@ -49,7 +49,7 @@ export default class extends Section {
     return <span>
       <h3>Newsletter</h3>
       <p>{content || CONTENT_NEWSLETTER}</p>
-      {contact ? <div className="success">Thank you, {contact.firstName}, for your subscription.<br /><strong>Welcome to the <em>VitruvianArmy</em>!</strong></div> : <forms.Contact submitText="Sign Up" onSubmit={this.submit}/>}
+      {contact ? <div className="success">Thank you, {contact.firstName}, for your subscription.</div> : <forms.Contact submitText="Sign Up" onSubmit={this.submit}/>}
       {message && <div className="error">{message}</div>}
     </span>;
   }
@@ -67,7 +67,7 @@ export default class extends Section {
       <TwitterShareButton url={`${url}`}>
         <img src="/@aim-digital/web/images/twitter.png" />
       </TwitterShareButton>
-      <EmailShareButton url={`${url}`} subject={`\<VitruvianTech\> ${collection.title}`} body={`${collection.summary}\n\n${url}\n\n`}>
+      <EmailShareButton url={`${url}`} subject={`Hello! ${collection.title}`} body={`${collection.summary}\n\n${url}\n\n`}>
         <img src="/@aim-digital/web/images/email.png" />
       </EmailShareButton>
     </div>);
