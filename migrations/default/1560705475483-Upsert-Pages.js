@@ -46,42 +46,32 @@ export default class {
   static async up(models, sequelize, DataTypes) {
     const {Page} = getModels();
 
-    try {
-      await Page.create({
-          route: 'tv/:title/:date/:id',
-          page: '@aim-digital/tv:Post',
-          headers: '["@aim-digital/tv:Post"]',
-          sections: '["@aim-digital/tv:Post"]'
-      });
+    await Page.update({
+        route: 'tv(/:collection)/:slug/:month/:day/:year',
+    }, { where: { route: 'tv/:title/:date/:id' } });
 
-      await Page.create({
-          route: 'tv(/:collection)',
-          page: '@aim-digital/tv:PostCollection',
-          headers: '["@aim-digital/tv:Post"]',
-          sections: '["@aim-digital/tv:PostCollection"]'
-      });
-    } catch (e) {
-      await Page.update({
-          route: 'tv/:title/:date/:id',
-          page: '@aim-digital/tv:Post',
-          headers: '["@aim-digital/tv:Post"]',
-          sections: '["@aim-digital/tv:Post"]'
-      }, { where: { route: 'tv/:title/:date/:id' } });
-
-      await Page.update({
-          route: 'tv(/:collection)',
-          page: '@aim-digital/tv:PostCollection',
-          headers: '["@aim-digital/tv:Post"]',
-          sections: '["@aim-digital/tv:PostCollection"]'
-      }, { where: { route: 'tv(/:collection)' } });
-    }
+    await Page.update({
+        route: 'tv(/:slug)',
+        page: '@aim-digital/tv:Collection',
+        sections: '["@aim-digital/tv:Collection"]'
+    }, { where: { route: 'tv(/:collection)' } });
   }
 
   static async down(models, sequelize, DataTypes) {
     const {Page} = getModels();
 
-    await Page.destroy({ where: { route: 'tv/:title/:date/:id' } });
+    await Page.update({
+        route: 'tv/:title/:date/:id',
+        page: '@aim-digital/tv:Post',
+        headers: '["@aim-digital/tv:Post"]',
+        sections: '["@aim-digital/tv:Post"]'
+    }, { where: { route: 'tv/:title/:date/:id' } });
 
-    await Page.destroy({ where: { route: 'tv(/:collection)' } });
+    await Page.update({
+        route: 'tv(/:collection)',
+        page: '@aim-digital/tv:PostCollection',
+        headers: '["@aim-digital/tv:Post"]',
+        sections: '["@aim-digital/tv:PostCollection"]'
+    }, { where: { route: 'tv(/:collection)' } });
   }
 }

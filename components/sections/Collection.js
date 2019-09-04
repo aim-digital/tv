@@ -19,13 +19,16 @@ const RE_ANCHOR_MARKDOWN = /\[([^\]]*)\]\(([^\s|\)]*)(?:\s"([^\)]*)")?\)/g;
 const CONTENT_NEWSLETTER = 'Join the AIM™ TV newsletter for project management tips, industry trends, free-to-use software, and more.';
 
 @connect(state => ({
+  params: state.router.params,
   collection: state['@boilerplatejs/strapi'].Entry.collections.content,
   list: state['@boilerplatejs/strapi'].Entry.collections.list
 }), {create})
 
 export default class extends Section {
   static propTypes = {
-    collection: PropTypes.object
+    params: PropTypes.object,
+    collection: PropTypes.object,
+    list: PropTypes.array
   };
 
   state = {
@@ -81,8 +84,8 @@ export default class extends Section {
   }
 
   render() {
-    let { collection } = this.props;
-    collection = { ...home, ...collection };
+    let { collection, params } = this.props;
+    collection = params.slug ? collection : home;
 
     return (
       <Section className={`post`}>

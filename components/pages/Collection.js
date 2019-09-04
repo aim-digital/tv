@@ -10,28 +10,29 @@ const getHeroImage = hero => hero ? hero.url : `${HOST}/@aim-digital/web/images/
 const formatCollectionUrl = (slug) => `${HOST}/tv${slug ? `/${slug}` : ''}`;
 
 @sync([{
-  promise: ({store: {dispatch}, params: { collection }}) => dispatch((collection ? load : list)('collections', collection ? { slug: collection } : undefined))
+  promise: ({store: {dispatch}, params: { slug }}) => dispatch((slug ? load : list)('collections', slug ? { slug } : undefined))
 }])
 
 @connect(state => {
-  const { collection } = state.router.params;
-  const { name, summary, media, slug } = state['@boilerplatejs/strapi'].Entry.collections[collection ? 'content' : 'list'];
+  const { slug } = state.router.params;
+  const { name, summary, media } = slug ? state['@boilerplatejs/strapi'].Entry.collections.content : home;
   const image = getHeroImage(media && media[0]);
+  const title = name ? `${name} - AIM™ TV` : 'AIM™ TV';
 
   return {
     className: 'post',
-    title: name ? `${name} - AIM™ TV` : 'AIM™ TV',
+    title,
     meta: [
-      {name: 'description', content: name},
+      {name: 'description', content: title},
       {property: 'og:type', content: 'article'},
       {property: 'og:url', content: formatCollectionUrl(slug)},
-      {property: 'og:title', content: name},
-      {property: 'og:description', content: summary || home.summary},
+      {property: 'og:title', content: title},
+      {property: 'og:description', content: summary},
       {property: 'og:image:secure_url', content: image},
       {property: 'og:image', content: image},
       {property: 'twitter:card', content: 'article'},
-      {property: 'twitter:title', content: name},
-      {property: 'twitter:description', content: summary || home.summary},
+      {property: 'twitter:title', content: title},
+      {property: 'twitter:description', content: summary},
       {property: 'twitter:image', content: image}
     ]
   };

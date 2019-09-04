@@ -9,14 +9,14 @@ import {home} from '@aim-digital/tv/data';
 
 export default class extends Header {
   static propTypes = {
-    content: PropTypes.object,
-    params: PropTypes.object
+    params: PropTypes.object,
+    content: PropTypes.object
   };
 
   render() {
     const styles = require('./Component.scss');
     let { content, params } = this.props;
-    content = { ...home, ...content };
+    content = params.slug ? content : home;
 
     return (
       <Header className={styles.slide}>
@@ -26,7 +26,7 @@ export default class extends Header {
             <h1>{content.name || content.title || 'AIM™ TV'}</h1>
             <h2>{content.dek}</h2>
           </div>
-          {params.date && <div className={styles.meta}>
+          {content.author && <div className={styles.meta}>
             <span>By <strong>{content.author.username}</strong></span>
             <br />
             <span>Updated <strong>{moment(content.updated || content.updateAt).format('MMMM Do YYYY, h:mm a')}</strong></span>

@@ -10,7 +10,7 @@ const getHeroImage = hero => hero ? hero.url : `${HOST}/@aim-digital/web/images/
 const formatPostUrl = (slug, date, collection) => `${HOST}/tv${collection ? `/${collection.slug}` : ''}/${slug}/${moment(date).format("M/D/YYYY")}`;
 
 @sync([{
-  promise: ({store: {dispatch}, params: { title }}) => dispatch(load('posts', { slug: title, published: true }))
+  promise: ({store: {dispatch}, params: { slug }}) => dispatch(load('posts', { slug, published: true }))
 }])
 
 @connect(state => {
