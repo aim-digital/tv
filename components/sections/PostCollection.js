@@ -5,8 +5,12 @@ import {ShareButtons} from 'react-share';
 import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
 import {create} from '@boilerplatejs/core/actions/Contact';
-import {postCollection} from '@aim-digital/tv/data';
+import {home} from '@aim-digital/tv/data';
 import * as forms from '@boilerplatejs/core/components/forms';
+
+const HOST = 'https://aimdigital.media';
+
+const formatCollectionUrl = (slug) => `${HOST}/tv${slug ? `/${slug}` : ''}`;
 
 const { FacebookShareButton, TwitterShareButton, EmailShareButton } = ShareButtons;
 
@@ -14,7 +18,10 @@ const RE_ANCHOR_MARKDOWN = /\[([^\]]*)\]\(([^\s|\)]*)(?:\s"([^\)]*)")?\)/g;
 
 const CONTENT_NEWSLETTER = 'Join the AIM™ TV newsletter for project management tips, industry trends, free-to-use software, and more.';
 
-@connect(state => ({collection: state['@boilerplatejs/contentful'].Entry.collection}), {create})
+@connect(state => ({
+  collection: state['@boilerplatejs/strapi'].Entry.collections.content,
+  list: state['@boilerplatejs/strapi'].Entry.collections.list
+}), {create})
 
 export default class extends Section {
   static propTypes = {
@@ -56,9 +63,9 @@ export default class extends Section {
 
   renderShare() {
     let { collection } = this.props;
-    collection = { ...postCollection, ...collection };
+    collection = { ...home, ...collection };
     const { slug } = collection;
-    const url = slug ? `https://aimdigital.media/tv/${slug}` : `https://aimdigital.media/tv`;
+    const url = formatCollectionUrl(slug);
 
     return (<div className="share">
       <FacebookShareButton url={`${url}`}>
@@ -67,7 +74,7 @@ export default class extends Section {
       <TwitterShareButton url={`${url}`}>
         <img src="/@aim-digital/web/images/twitter.png" />
       </TwitterShareButton>
-      <EmailShareButton url={`${url}`} subject={`Hello! ${collection.title}`} body={`${collection.summary}\n\n${url}\n\n`}>
+      <EmailShareButton url={`${url}`} subject={`Hello! ${collection.name}`} body={`${collection.summary}\n\n${url}\n\n`}>
         <img src="/@aim-digital/web/images/email.png" />
       </EmailShareButton>
     </div>);
@@ -75,12 +82,12 @@ export default class extends Section {
 
   render() {
     let { collection } = this.props;
-    collection = { ...postCollection, ...collection };
+    collection = { ...home, ...collection };
 
     return (
       <Section className={`post`}>
-        <h1>{collection.title || 'VitruvianTech TV'}</h1>
-        <h2>{collection.tagline}</h2>
+        <h1>{collection.name || 'AIM™ TV'}</h1>
+        <h2>{collection.dek}</h2>
         {collection.summary && <p className="summary" dangerouslySetInnerHTML={{__html: collection.summary.replace(RE_ANCHOR_MARKDOWN, '<a href="$2" title="$3" target="_blank">$1</a>')}} />}
         {this.renderShare()}
         <br />

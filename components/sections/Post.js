@@ -6,14 +6,17 @@ import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
 import {create} from '@boilerplatejs/core/actions/Contact';
 import * as forms from '@boilerplatejs/core/components/forms';
+import moment from 'moment';
 
 const { FacebookShareButton, TwitterShareButton, EmailShareButton } = ShareButtons;
 
+const HOST = 'https://aimdigital.media';
 const RE_ANCHOR_MARKDOWN = /\[([^\]]*)\]\(([^\s|\)]*)(?:\s"([^\)]*)")?\)/g;
-
 const CONTENT_NEWSLETTER = 'Join the AIM™ TV newsletter for project management tips, industry trends, free-to-use software, and more.';
 
-@connect(state => ({post: state['@boilerplatejs/contentful'].Entry.post}), {create})
+const formatPostUrl = (slug, date, collection) => `${HOST}/tv/${collection ? `${collection.slug}/` : ''}${slug}/${moment(date).format("M/D/YYYY")}`;
+
+@connect(state => ({post: state['@boilerplatejs/strapi'].Entry.posts.content}), {create})
 
 export default class extends Section {
   static propTypes = {
@@ -46,23 +49,23 @@ export default class extends Section {
   renderContent() {
     return this.props.post.content.map((content, i) => {
       return (<div key={i} className={`${content.type} ${content.type === 'image' || content.type === 'video' ? 'media' : 'text'}`}>
-        {content.type === 'newsletter' && this.renderNewsletter(content.body)}
-        {content.type === 'heading' && <h3>{content.body}</h3>}
-        {content.type === 'paragraph' && <p dangerouslySetInnerHTML={{__html: content.body.replace(RE_ANCHOR_MARKDOWN, '<a href="$2" title="$3" target="_blank">$1</a>')}} />}
-        {content.type === 'quote' && <blockquote data-credit={content.credit}><p><span>{content.body}</span></p></blockquote>}
+        {content.type === 'newsletter' && this.renderNewsletter(content.copy)}
+        {content.type === 'heading' && <h3>{content.copy}</h3>}
+        {content.type === 'paragraph' && <p dangerouslySetInnerHTML={{__html: content.copy.replace(RE_ANCHOR_MARKDOWN, '<a href="$2" title="$3" target="_blank">$1</a>')}} />}
+        {content.type === 'quote' && <blockquote data-credit={content.credit}><p><span>{content.copy}</span></p></blockquote>}
         {content.type === 'image' && (<span>
           <span className="type">Look</span>
-          <img width="100%" src={content.url || content.file.url} />
+          <img width="100%" src={content.url || content.media[0].url} />
           {content.credit && <span className="credit">{content.credit}</span>}
-          {content.caption && <p className="caption"><span>{content.caption}</span></p>}
+          {content.copy && <p className="caption"><span>{content.copy}</span></p>}
         </span>)}
         {content.type === 'video' && (<span>
           <span className="type">Watch</span>
           <video id={`video-${(this.videos++)}`} className="video-js" width="100%" controls preload="auto">
-            <source src={content.url || content.file.url} type="video/mp4" />
+            <source src={content.url || content.media[0].url} type="video/mp4" />
           </video>
           {content.credit && <span className="credit">{content.credit}</span>}
-          {content.caption && <p className="caption"><span>{content.caption}</span></p>}
+          {content.copy && <p className="caption"><span>{content.copy}</span></p>}
         </span>)}
       </div>)
     });
@@ -81,9 +84,8 @@ export default class extends Section {
   }
 
   renderShare() {
-    const { post } = this.props;
-    const { id, slug } = post;
-    const url = `https://aimdigital.media/tv/${slug}/${id}`;
+    const { title, summary, slug, createdAt, collections } = this.props.post;
+    const url = formatPostUrl(slug, createdAt, collections[0]);
 
     return (<div className="share">
       <FacebookShareButton url={`${url}`}>
@@ -92,7 +94,7 @@ export default class extends Section {
       <TwitterShareButton url={`${url}`}>
         <img src="/@aim-digital/web/images/twitter.png" />
       </TwitterShareButton>
-      <EmailShareButton url={`${url}`} subject={`Hello! ${post.title}`} body={`${post.summary}\n\n${url}\n\n`}>
+      <EmailShareButton url={`${url}`} subject={`Hello! ${title}`} body={`${summary}\n\n${url}\n\n`}>
         <img src="/@aim-digital/web/images/email.png" />
       </EmailShareButton>
     </div>);
@@ -132,7 +134,7 @@ export default class extends Section {
     return (
       <Section className={`post`}>
         <h1>{post.title}</h1>
-        <h2>{post.tagline}</h2>
+        <h2>{post.dek}</h2>
         <p className="summary" dangerouslySetInnerHTML={{__html: post.summary.replace(RE_ANCHOR_MARKDOWN, '<a href="$2" title="$3" target="_blank">$1</a>')}} />
         {this.renderShare()}
         <br />

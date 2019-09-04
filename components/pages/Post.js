@@ -1,16 +1,21 @@
 import {connect} from 'react-redux';
 import {sync} from '@boilerplatejs/core/lib/Fetch';
-import {post} from '@boilerplatejs/contentful/actions/Entry';
+import {load} from '@boilerplatejs/strapi/actions/Entry';
 import {Page} from '@aim-digital/web/components/layout';
+import moment from 'moment';
 
-const getHeroImage = hero => hero.file ? hero.file.url : hero.url;
+const HOST = 'https://aimdigital.media';
+
+const getHeroImage = hero => hero ? hero.url : `${HOST}/@aim-digital/web/images/logo.png`;
+const formatPostUrl = (slug, date, collection) => `${HOST}/tv${collection ? `/${collection.slug}` : ''}/${slug}/${moment(date).format("M/D/YYYY")}`;
 
 @sync([{
-  promise: ({store: {dispatch}, params: { id }}) => dispatch(post(id))
+  promise: ({store: {dispatch}, params: { title }}) => dispatch(load('posts', { slug: title, published: true }))
 }])
 
 @connect(state => {
-  const { id, title, summary, hero, slug } = state['@boilerplatejs/contentful'].Entry.post;
+  const { title, summary, slug, media, createdAt, collections } = state['@boilerplatejs/strapi'].Entry.posts.content;
+  const image = getHeroImage(media[0]);
 
   return {
     className: 'post',
@@ -18,15 +23,15 @@ const getHeroImage = hero => hero.file ? hero.file.url : hero.url;
     meta: [
       {name: 'description', content: title},
       {property: 'og:type', content: 'article'},
-      {property: 'og:url', content: `https://aimdigital.media/tv/${slug}/${id}`},
+      {property: 'og:url', content: formatPostUrl(slug, createdAt, collections[0])},
       {property: 'og:title', content: title},
       {property: 'og:description', content: summary},
-      {property: 'og:image:secure_url', content: hero ? getHeroImage(hero) : 'https://aimdigital.media/@aim-digital/web/images/logo.png'},
-      {property: 'og:image', content: hero ? getHeroImage(hero) : 'https://aimdigital.media/@aim-digital/web/images/logo.png'},
+      {property: 'og:image:secure_url', content: image},
+      {property: 'og:image', content: image},
       {property: 'twitter:card', content: 'article'},
       {property: 'twitter:title', content: title},
       {property: 'twitter:description', content: summary},
-      {property: 'twitter:image', content: hero ? getHeroImage(hero) : 'https://aimdigital.media/@aim-digital/web/images/logo.png'}
+      {property: 'twitter:image', content: image}
     ]
   };
 })

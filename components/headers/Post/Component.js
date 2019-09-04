@@ -3,36 +3,35 @@ import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
 import {Header} from '@aim-digital/web/components/layout';
 import moment from 'moment';
-import {postCollection} from '@aim-digital/tv/data';
+import {home} from '@aim-digital/tv/data';
 
-const getHeroImage = hero => hero.file ? hero.file.url : hero.url;
-
-@connect(state => ({data: state['@boilerplatejs/contentful'].Entry.data}))
+@connect(state => ({ content: state['@boilerplatejs/strapi'].Entry.content, params: state.router.params }))
 
 export default class extends Header {
   static propTypes = {
-    data: PropTypes.object
+    content: PropTypes.object,
+    params: PropTypes.object
   };
 
   render() {
     const styles = require('./Component.scss');
-    let { data } = this.props;
-    data = { ...postCollection, ...data };
+    let { content, params } = this.props;
+    content = { ...home, ...content };
 
     return (
       <Header className={styles.slide}>
         <div>
-          <div className={styles.hero} style={{ backgroundImage: `url(${data.hero ? getHeroImage(data.hero) : require('./images/background.jpg')})` }}/>
+          <div className={styles.hero} style={{ backgroundImage: `url(${content.media && content.media[0] ? content.media[0].url : require('./images/background.jpg')})` }}/>
           <div className={styles.title}>
-            <h1>{data.title || 'VitruvianTech TV'}</h1>
-            <h2>{data.tagline}</h2>
+            <h1>{content.name || content.title || 'AIM™ TV'}</h1>
+            <h2>{content.dek}</h2>
           </div>
-          {!data.posts && <div className={styles.meta}>
-            <span>By <strong>{data.author.name}</strong></span>
+          {params.date && <div className={styles.meta}>
+            <span>By <strong>{content.author.username}</strong></span>
             <br />
-            <span>Published <strong>{moment(data.published).format('MMMM Do YYYY, h:mm a')}</strong></span>
+            <span>Updated <strong>{moment(content.updated || content.updateAt).format('MMMM Do YYYY, h:mm a')}</strong></span>
             <br />
-            <span>From <strong>{data.area}</strong></span>
+            <span>From <strong>{content.location}</strong></span>
           </div>}
         </div>
       </Header>
