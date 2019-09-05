@@ -14,8 +14,9 @@ const formatCollectionUrl = (slug) => `${HOST}/tv${slug ? `/${slug}` : ''}`;
 }])
 
 @connect(state => {
+  const content = state['@boilerplatejs/strapi'].Entry.collections.content;
   const { slug } = state.router.params;
-  const { name, summary, media } = slug ? state['@boilerplatejs/strapi'].Entry.collections.content : home;
+  const { name, summary, media } = slug && content ? content : home;
   const image = getHeroImage(media && media[0]);
   const title = name ? `${name} - AIM™ TV` : 'AIM™ TV';
 

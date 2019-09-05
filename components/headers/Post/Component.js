@@ -16,7 +16,7 @@ export default class extends Header {
   render() {
     const styles = require('./Component.scss');
     let { content, params } = this.props;
-    content = params.slug ? content : home;
+    content = content && params.slug ? content : home;
 
     return (
       <Header className={styles.slide}>

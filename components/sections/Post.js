@@ -6,6 +6,7 @@ import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
 import {create} from '@boilerplatejs/core/actions/Contact';
 import * as forms from '@boilerplatejs/core/components/forms';
+import {Error} from '@boilerplatejs/core/components/sections';
 import moment from 'moment';
 
 const { FacebookShareButton, TwitterShareButton, EmailShareButton } = ShareButtons;
@@ -132,7 +133,7 @@ export default class extends Section {
     const { post } = this.props;
 
     return (
-      <Section className={`post`}>
+      post ? <Section className={`post`}>
         <h1>{post.title}</h1>
         <h2>{post.dek}</h2>
         <p className="summary" dangerouslySetInnerHTML={{__html: post.summary.replace(RE_ANCHOR_MARKDOWN, '<a href="$2" title="$3" target="_blank">$1</a>')}} />
@@ -149,7 +150,7 @@ export default class extends Section {
           <small>© American Interactive Media (A VitruvianTech® Company)</small>
         </p>
         <br />
-      </Section>
+      </Section> : <Error/>
     );
   }
 }

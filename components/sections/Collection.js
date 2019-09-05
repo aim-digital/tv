@@ -85,7 +85,7 @@ export default class extends Section {
 
   render() {
     let { collection, params } = this.props;
-    collection = params.slug ? collection : home;
+    collection = collection && params.slug ? collection : home;
 
     return (
       <Section className={`post`}>
