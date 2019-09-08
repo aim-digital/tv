@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {ShareButtons} from 'react-share';
 import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
-import {create} from '@boilerplatejs/core/actions/Contact';
+import {update} from '@boilerplatejs/hubspot/actions/Contact';
 import {home} from '@aim-digital/tv/data';
 import * as forms from '@boilerplatejs/core/components/forms';
 
@@ -22,7 +22,7 @@ const CONTENT_NEWSLETTER = 'Join the AIM™ TV newsletter for project management
   params: state.router.params,
   collection: state['@boilerplatejs/strapi'].Entry.collections.content,
   list: state['@boilerplatejs/strapi'].Entry.collections.list
-}), {create})
+}), {update})
 
 export default class extends Section {
   static propTypes = {
@@ -39,13 +39,21 @@ export default class extends Section {
   };
 
   submit = values => {
-    const { create } = this.props;
+    const { update } = this.props;
+    const { email } = values;
     const ga = { category: 'Newsletter Form', action: 'Sign Up' };
 
     if (values.email) {
       ReactGA.event({ ...ga, label: 'Attempt' });
 
-      create({ ...values, newsletter: true })
+      update({
+        newsletter: true,
+        properties: {
+          email,
+          firstname: values.firstName,
+          lastname: values.lastName
+        }
+      })
         .then(contact => this.setState({ contact, form: { message: null } }))
         .then(() => ReactGA.event({ ...ga, label: `Success` }))
         .catch(({message}) => this.setState({ form: { message } }));
@@ -59,7 +67,7 @@ export default class extends Section {
     return <span>
       <h3>Newsletter</h3>
       <p>{content || CONTENT_NEWSLETTER}</p>
-      {contact ? <div className="success">Thank you, {contact.firstName}, for your subscription.</div> : <forms.Contact submitText="Sign Up" onSubmit={this.submit}/>}
+      {contact ? <div className="success">Thank you, {contact.firstname.value}, for your subscription.</div> : <forms.Contact submitText="Sign Up" onSubmit={this.submit}/>}
       {message && <div className="error">{message}</div>}
     </span>;
   }
