@@ -19,9 +19,8 @@ export default class extends Header {
     content = content && params.slug ? content : home;
 
     return (
-      <Header className={styles.slide}>
+      <Header className={styles.slide} images={[content.media && content.media[0] ? content.media[0].url : require('./images/background.jpg')]}>
         <div>
-          <div className={styles.hero} style={{ backgroundImage: `url(${content.media && content.media[0] ? content.media[0].url : require('./images/background.jpg')})` }}/>
           <div className={styles.title}>
             <h1>{content.name || content.title || 'AIM™ TV'}</h1>
             <h2>{content.dek}</h2>
