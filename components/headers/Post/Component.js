@@ -32,6 +32,9 @@ export default class extends Header {
             <br />
             <span>From <strong>{content.location}</strong></span>
           </div>}
+          <div className="scroll">
+            <button><span/></button>
+          </div>
         </div>
       </Header>
     );
