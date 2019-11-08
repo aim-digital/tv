@@ -1,12 +1,12 @@
 import {sync} from '@boilerplatejs/core/lib/Fetch';
 import {connect} from 'react-redux';
-import {Page} from '@fox-zero/web/components/layout';
-import {home} from '@fox-zero/tv/data';
+import {Page} from '@aim-digital/web/components/layout';
+import {home} from '@aim-digital/tv/data';
 import {list, load} from '@boilerplatejs/strapi/actions/Entry';
 
 const HOST = 'https://foxzero.io';
 
-const getHeroImage = hero => hero ? hero.url : `${HOST}/@fox-zero/web/images/logo.png`;
+const getHeroImage = hero => hero ? hero.url : `${HOST}/@aim-digital/web/images/logo.png`;
 const formatCollectionUrl = (slug) => `${HOST}/tv${slug ? `/${slug}` : ''}`;
 
 @sync([{

@@ -1,9 +1,9 @@
 import React from 'react';
 import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
-import {Header} from '@fox-zero/web/components/layout';
+import {Header} from '@aim-digital/web/components/layout';
 import moment from 'moment';
-import {home} from '@fox-zero/tv/data';
+import {home} from '@aim-digital/tv/data';
 
 @connect(state => ({ content: state['@boilerplatejs/strapi'].Entry.content, params: state.router.params }))
 

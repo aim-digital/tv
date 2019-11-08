@@ -5,7 +5,7 @@ import {ShareButtons} from 'react-share';
 import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
 import {update} from '@boilerplatejs/hubspot/actions/Contact';
-import {home} from '@fox-zero/tv/data';
+import {home} from '@aim-digital/tv/data';
 import * as forms from '@boilerplatejs/core/components/forms';
 
 const HOST = 'https://foxzero.io';
@@ -80,13 +80,13 @@ export default class extends Section {
 
     return (<div className="share">
       <FacebookShareButton url={`${url}`}>
-        <img src="/@fox-zero/web/images/facebook.png" />
+        <img src="/@aim-digital/web/images/facebook.png" />
       </FacebookShareButton>
       <TwitterShareButton url={`${url}`}>
-        <img src="/@fox-zero/web/images/twitter.png" />
+        <img src="/@aim-digital/web/images/twitter.png" />
       </TwitterShareButton>
       <EmailShareButton url={`${url}`} subject={`Hello! ${collection.name}`} body={`${collection.summary}\n\n${url}\n\n`}>
-        <img src="/@fox-zero/web/images/email.png" />
+        <img src="/@aim-digital/web/images/email.png" />
       </EmailShareButton>
     </div>);
   }
