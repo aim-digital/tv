@@ -98,13 +98,13 @@ export default class extends Section {
 
     return (<div className="share">
       <FacebookShareButton url={`${url}`}>
-        <img src="/@fox-zero/web/images/facebook.png" />
+        <img src="/@aim-digital/web/images/facebook.png" />
       </FacebookShareButton>
       <TwitterShareButton url={`${url}`}>
-        <img src="/@fox-zero/web/images/twitter.png" />
+        <img src="/@aim-digital/web/images/twitter.png" />
       </TwitterShareButton>
       <EmailShareButton url={`${url}`} subject={`Hello! ${title}`} body={`${summary}\n\n${url}\n\n`}>
-        <img src="/@fox-zero/web/images/email.png" />
+        <img src="/@aim-digital/web/images/email.png" />
       </EmailShareButton>
     </div>);
   }
@@ -155,7 +155,7 @@ export default class extends Section {
         </article>
         {this.renderShare()}
         <p className="text-center humility">
-          <small>© FoxZero Media (a VitruvianTech® brand)</small>
+          <small>© FoxZero Media (A VitruvianTech® Company)</small>
         </p>
         <br />
       </Section> : <Error/>

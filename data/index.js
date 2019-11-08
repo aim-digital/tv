@@ -1,1 +1,1 @@
-export postCollection from './postCollection';
+export home from './home';

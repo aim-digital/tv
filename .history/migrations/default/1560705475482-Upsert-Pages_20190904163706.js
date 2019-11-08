@@ -49,30 +49,30 @@ export default class {
     try {
       await Page.create({
           route: 'tv/:title/:date/:id',
-          page: '@fox-zero/tv:Post',
-          headers: '["@fox-zero/tv:Post"]',
-          sections: '["@fox-zero/tv:Post"]'
+          page: '@aim-digital/tv:Post',
+          headers: '["@aim-digital/tv:Post"]',
+          sections: '["@aim-digital/tv:Post"]'
       });
 
       await Page.create({
           route: 'tv(/:collection)',
-          page: '@fox-zero/tv:PostCollection',
-          headers: '["@fox-zero/tv:Post"]',
-          sections: '["@fox-zero/tv:PostCollection"]'
+          page: '@aim-digital/tv:PostCollection',
+          headers: '["@aim-digital/tv:Post"]',
+          sections: '["@aim-digital/tv:PostCollection"]'
       });
     } catch (e) {
       await Page.update({
           route: 'tv/:title/:date/:id',
-          page: '@fox-zero/tv:Post',
-          headers: '["@fox-zero/tv:Post"]',
-          sections: '["@fox-zero/tv:Post"]'
+          page: '@aim-digital/tv:Post',
+          headers: '["@aim-digital/tv:Post"]',
+          sections: '["@aim-digital/tv:Post"]'
       }, { where: { route: 'tv/:title/:date/:id' } });
 
       await Page.update({
           route: 'tv(/:collection)',
-          page: '@fox-zero/tv:PostCollection',
-          headers: '["@fox-zero/tv:Post"]',
-          sections: '["@fox-zero/tv:PostCollection"]'
+          page: '@aim-digital/tv:PostCollection',
+          headers: '["@aim-digital/tv:Post"]',
+          sections: '["@aim-digital/tv:PostCollection"]'
       }, { where: { route: 'tv(/:collection)' } });
     }
   }

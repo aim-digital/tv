@@ -46,42 +46,32 @@ export default class {
   static async up(models, sequelize, DataTypes) {
     const {Page} = getModels();
 
-    try {
-      await Page.create({
-          route: 'tv/:title/:date/:id',
-          page: '@fox-zero/tv:Post',
-          headers: '["@fox-zero/tv:Post"]',
-          sections: '["@fox-zero/tv:Post"]'
-      });
+    await Page.update({
+        route: 'tv(/:collection)/:slug/:month/:day/:year',
+    }, { where: { route: 'tv/:title/:date/:id' } });
 
-      await Page.create({
-          route: 'tv(/:collection)',
-          page: '@fox-zero/tv:PostCollection',
-          headers: '["@fox-zero/tv:Post"]',
-          sections: '["@fox-zero/tv:PostCollection"]'
-      });
-    } catch (e) {
-      await Page.update({
-          route: 'tv/:title/:date/:id',
-          page: '@fox-zero/tv:Post',
-          headers: '["@fox-zero/tv:Post"]',
-          sections: '["@fox-zero/tv:Post"]'
-      }, { where: { route: 'tv/:title/:date/:id' } });
-
-      await Page.update({
-          route: 'tv(/:collection)',
-          page: '@fox-zero/tv:PostCollection',
-          headers: '["@fox-zero/tv:Post"]',
-          sections: '["@fox-zero/tv:PostCollection"]'
-      }, { where: { route: 'tv(/:collection)' } });
-    }
+    await Page.update({
+        route: 'tv(/:slug)',
+        page: '@fox-zero/tv:Collection',
+        sections: '["@fox-zero/tv:Collection"]'
+    }, { where: { route: 'tv(/:collection)' } });
   }
 
   static async down(models, sequelize, DataTypes) {
     const {Page} = getModels();
 
-    await Page.destroy({ where: { route: 'tv/:title/:date/:id' } });
+    await Page.update({
+        route: 'tv/:title/:date/:id',
+        page: '@fox-zero/tv:Post',
+        headers: '["@fox-zero/tv:Post"]',
+        sections: '["@fox-zero/tv:Post"]'
+    }, { where: { route: 'tv/:title/:date/:id' } });
 
-    await Page.destroy({ where: { route: 'tv(/:collection)' } });
+    await Page.update({
+        route: 'tv(/:collection)',
+        page: '@fox-zero/tv:PostCollection',
+        headers: '["@fox-zero/tv:Post"]',
+        sections: '["@fox-zero/tv:PostCollection"]'
+    }, { where: { route: 'tv(/:collection)' } });
   }
 }
