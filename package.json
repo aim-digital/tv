@@ -1,5 +1,5 @@
 {
-  "name": "@aim-digital/tv",
+  "name": "@fox-zero/tv",
   "version": "1.0.0-pre.1",
   "scripts": {
     "postinstall": "boilerplate install --bundle $npm_package_name && boilerplate migrate up --bundle $npm_package_name",
