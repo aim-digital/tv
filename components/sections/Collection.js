@@ -5,12 +5,12 @@ import {ShareButtons} from 'react-share';
 import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
 import {update} from '@boilerplatejs/hubspot/actions/Contact';
-import {home} from '@fox-zero/tv/data';
+import {home} from '@fox-zero/content/data';
 import * as forms from '@boilerplatejs/core/components/forms';
 
 const HOST = 'https://foxzero.io';
 
-const formatCollectionUrl = (slug) => `${HOST}/tv${slug ? `/${slug}` : ''}`;
+const formatCollectionUrl = (slug) => `${HOST}/stream${slug ? `/${slug}` : ''}`;
 
 const { FacebookShareButton, TwitterShareButton, EmailShareButton } = ShareButtons;
 

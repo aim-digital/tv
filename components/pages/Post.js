@@ -2,13 +2,14 @@ import {connect} from 'react-redux';
 import {sync} from '@boilerplatejs/core/lib/Fetch';
 import {load} from '@boilerplatejs/strapi/actions/Entry';
 import {Page} from '@fox-zero/web/components/layout';
-import {home} from '@fox-zero/tv/data';
+import {home} from '@fox-zero/content/data';
 import moment from 'moment';
 
+const BRAND = 'FoxStream™';
 const HOST = 'https://foxzero.io';
 
 const getHeroImage = hero => hero ? hero.url : `${HOST}/@fox-zero/web/images/logo.png`;
-const formatPostUrl = (slug, date, collection) => `${HOST}/tv${collection ? `/${collection.slug}` : ''}/${slug}/${moment(date).format("M/D/YYYY")}`;
+const formatPostUrl = (slug, date, collection) => `${HOST}/stream${collection ? `/${collection.slug}` : ''}/${slug}/${moment(date).format("M/D/YYYY")}`;
 
 @sync([{
   promise: ({store: {dispatch}, params: { slug }}) => dispatch(load('posts', { slug, published: true }))
@@ -23,7 +24,7 @@ const formatPostUrl = (slug, date, collection) => `${HOST}/tv${collection ? `/${
 
     return {
       className: 'post',
-      title: `${title} - FoxStream™`,
+      title: `${title} - ${BRAND}`,
       meta: [
         {name: 'description', content: title},
         {property: 'og:type', content: 'article'},
@@ -39,7 +40,7 @@ const formatPostUrl = (slug, date, collection) => `${HOST}/tv${collection ? `/${
       ]
     };
   } else {
-    const title = 'FoxStream™';
+    const title = BRAND;
     const image = getHeroImage();
     const { summary } = home;
 

@@ -1,6 +1,6 @@
 {
-  "name": "@fox-zero/tv",
-  "version": "1.0.0-pre.1",
+  "name": "@fox-zero/content",
+  "version": "1.0.0-pre.2",
   "scripts": {
     "postinstall": "boilerplate install --bundle $npm_package_name && boilerplate migrate up --bundle $npm_package_name",
     "uninstall": "boilerplate uninstall --bundle $npm_package_name"

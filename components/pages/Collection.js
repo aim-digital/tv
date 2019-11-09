@@ -1,9 +1,10 @@
 import {sync} from '@boilerplatejs/core/lib/Fetch';
 import {connect} from 'react-redux';
 import {Page} from '@fox-zero/web/components/layout';
-import {home} from '@fox-zero/tv/data';
+import {home} from '@fox-zero/content/data';
 import {list, load} from '@boilerplatejs/strapi/actions/Entry';
 
+const BRAND = 'FoxStream™';
 const HOST = 'https://foxzero.io';
 
 const getHeroImage = hero => hero ? hero.url : `${HOST}/@fox-zero/web/images/logo.png`;
@@ -18,7 +19,7 @@ const formatCollectionUrl = (slug) => `${HOST}/tv${slug ? `/${slug}` : ''}`;
   const { slug } = state.router.params;
   const { name, summary, media } = slug && content ? content : home;
   const image = getHeroImage(media && media[0]);
-  const title = name ? `${name} - FoxStream™` : 'FoxStream™';
+  const title = name ? `${name} - ${BRAND}` : BRAND;
 
   return {
     className: 'post',

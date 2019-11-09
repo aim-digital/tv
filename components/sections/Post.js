@@ -15,7 +15,7 @@ const HOST = 'https://foxzero.io';
 const RE_ANCHOR_MARKDOWN = /\[([^\]]*)\]\(([^\s|\)]*)(?:\s"([^\)]*)")?\)/g;
 const CONTENT_NEWSLETTER = 'Join the FoxStream™ newsletter for project management tips, industry trends, free-to-use software, and more.';
 
-const formatPostUrl = (slug, date, collection) => `${HOST}/tv/${collection ? `${collection.slug}/` : ''}${slug}/${moment(date).format("M/D/YYYY")}`;
+const formatPostUrl = (slug, date, collection) => `${HOST}/stream/${collection ? `${collection.slug}/` : ''}${slug}/${moment(date).format("M/D/YYYY")}`;
 
 @connect(state => ({post: state['@boilerplatejs/strapi'].Entry.posts.content}), {update})
 

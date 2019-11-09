@@ -47,13 +47,13 @@ export default class {
     const {Page} = getModels();
 
     await Page.update({
-        route: 'tv(/:collection)/:slug/:month/:day/:year',
+        route: 'stream(/:collection)/:slug/:month/:day/:year',
     }, { where: { route: 'tv/:title/:date/:id' } });
 
     await Page.update({
-        route: 'tv(/:slug)',
-        page: '@fox-zero/tv:Collection',
-        sections: '["@fox-zero/tv:Collection"]'
+        route: 'stream(/:slug)',
+        page: '@fox-zero/content:Collection',
+        sections: '["@fox-zero/content:Collection"]'
     }, { where: { route: 'tv(/:collection)' } });
   }
 
@@ -61,17 +61,13 @@ export default class {
     const {Page} = getModels();
 
     await Page.update({
-        route: 'tv/:title/:date/:id',
-        page: '@fox-zero/tv:Post',
-        headers: '["@fox-zero/tv:Post"]',
-        sections: '["@fox-zero/tv:Post"]'
-    }, { where: { route: 'tv/:title/:date/:id' } });
+        route: 'tv/:title/:date/:id'
+    }, { where: { route: 'stream(/:collection)/:slug/:month/:day/:year' } });
 
     await Page.update({
         route: 'tv(/:collection)',
-        page: '@fox-zero/tv:PostCollection',
-        headers: '["@fox-zero/tv:Post"]',
-        sections: '["@fox-zero/tv:PostCollection"]'
-    }, { where: { route: 'tv(/:collection)' } });
+        page: '@fox-zero/content:PostCollection',
+        sections: '["@fox-zero/content:PostCollection"]'
+    }, { where: { route: 'stream(/:slug)' } });
   }
 }
