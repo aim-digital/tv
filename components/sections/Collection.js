@@ -109,7 +109,7 @@ export default class extends Section {
         </article>
         {this.renderShare()}
         <p className="text-center humility">
-          <small>© FoxZero Media (A VitruvianTech® Company)</small>
+          <small>© Fox Zero (a VitruvianTech® brand)</small>
         </p>
         <br />
       </Section>

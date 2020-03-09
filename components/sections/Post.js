@@ -57,24 +57,26 @@ export default class extends Section {
 
   renderContent() {
     return this.props.post.content.map((content, i) => {
-      return (<div key={i} className={`${content.type} ${content.type === 'image' || content.type === 'video' ? 'media' : 'text'}`}>
-        {content.type === 'newsletter' && this.renderNewsletter(content.copy)}
-        {content.type === 'heading' && <h3>{content.copy}</h3>}
-        {content.type === 'paragraph' && <p dangerouslySetInnerHTML={{__html: content.copy.replace(RE_ANCHOR_MARKDOWN, '<a href="$2" title="$3" target="_blank">$1</a>')}} />}
-        {content.type === 'quote' && <blockquote data-credit={content.credit}><p><span>{content.copy}</span></p></blockquote>}
-        {content.type === 'image' && (<span>
+      const { type, value, copy, media, credit, url } = content;
+
+      return (<div key={i} className={`${type} ${type === 'image' || type === 'video' ? 'media' : 'text'}`}>
+        {type === 'newsletter' && this.renderNewsletter(value)}
+        {type === 'heading' && <h3>{value}</h3>}
+        {type === 'paragraph' && <p dangerouslySetInnerHTML={{__html: copy.replace(RE_ANCHOR_MARKDOWN, '<a href="$2" title="$3" target="_blank">$1</a>')}} />}
+        {type === 'quote' && <blockquote data-credit={credit}><p><span>{copy}</span></p></blockquote>}
+        {type === 'image' && (<span>
           <span className="type">Look</span>
-          <img width="100%" src={content.url || content.media[0].url} />
-          {content.credit && <span className="credit">{content.credit}</span>}
-          {content.copy && <p className="caption"><span>{content.copy}</span></p>}
+          <img width="100%" src={url || media[0].url} />
+          {credit && <span className="credit">{credit}</span>}
+          {value && <p className="caption"><span>{value}</span></p>}
         </span>)}
-        {content.type === 'video' && (<span>
+        {type === 'video' && (<span>
           <span className="type">Watch</span>
           <video id={`video-${(this.videos++)}`} className="video-js" width="100%" controls preload="auto">
-            <source src={content.url || content.media[0].url} type="video/mp4" />
+            <source src={url || media[0].url} type="video/mp4" />
           </video>
-          {content.credit && <span className="credit">{content.credit}</span>}
-          {content.copy && <p className="caption"><span>{content.copy}</span></p>}
+          {credit && <span className="credit">{credit}</span>}
+          {value && <p className="caption"><span>{value}</span></p>}
         </span>)}
       </div>)
     });
@@ -155,7 +157,7 @@ export default class extends Section {
         </article>
         {this.renderShare()}
         <p className="text-center humility">
-          <small>© FoxZero Media (a VitruvianTech® brand)</small>
+          <small>© Fox Zero (a VitruvianTech® brand)</small>
         </p>
         <br />
       </Section> : <Error/>
