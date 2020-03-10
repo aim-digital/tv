@@ -8,7 +8,7 @@ const BRAND = 'FoxStream™';
 const HOST = 'https://foxzero.io';
 
 const getHeroImage = hero => hero ? hero.url : `${HOST}/@fox-zero/web/images/logo.png`;
-const formatCollectionUrl = (slug) => `${HOST}/tv${slug ? `/${slug}` : ''}`;
+const formatCollectionUrl = slug => `${HOST}/stream${slug ? `/${slug}` : ''}`;
 
 @sync([{
   promise: ({store: {dispatch}, params: { slug }}) => dispatch((slug ? load : list)('collections', slug ? { slug } : undefined))

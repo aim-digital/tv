@@ -9,17 +9,18 @@ const BRAND = 'FoxStream™';
 const HOST = 'https://foxzero.io';
 
 const getHeroImage = hero => hero ? hero.url : `${HOST}/@fox-zero/web/images/logo.png`;
-const formatPostUrl = (slug, date, collection) => `${HOST}/stream${collection ? `/${collection.slug}` : ''}/${slug}/${moment(date).format("M/D/YYYY")}`;
+const formatPostUrl = (slug, date, collection) => `${HOST}/stream${collection ? `/${collection}` : ''}/${slug}/${moment(date).format("M/D/YYYY")}`;
 
 @sync([{
   promise: ({store: {dispatch}, params: { slug }}) => dispatch(load('posts', { slug, published: true }))
 }])
 
 @connect(state => {
+  const { collection } = state.router.params;
   const content = state['@boilerplatejs/strapi'].Entry.posts.content;
 
   if (content) {
-    const { title, summary, slug, media, createdAt, collections } = state['@boilerplatejs/strapi'].Entry.posts.content;
+    const { title, summary, slug, media, updatedAt, updated = updatedAt } = state['@boilerplatejs/strapi'].Entry.posts.content;
     const image = getHeroImage(media[0]);
 
     return {
@@ -28,7 +29,7 @@ const formatPostUrl = (slug, date, collection) => `${HOST}/stream${collection ? 
       meta: [
         {name: 'description', content: title},
         {property: 'og:type', content: 'article'},
-        {property: 'og:url', content: formatPostUrl(slug, createdAt, collections[0])},
+        {property: 'og:url', content: formatPostUrl(slug, updated, collection)},
         {property: 'og:title', content: title},
         {property: 'og:description', content: summary},
         {property: 'og:image:secure_url', content: image},

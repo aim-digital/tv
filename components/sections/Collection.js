@@ -10,7 +10,7 @@ import * as forms from '@boilerplatejs/core/components/forms';
 
 const HOST = 'https://foxzero.io';
 
-const formatCollectionUrl = (slug) => `${HOST}/stream${slug ? `/${slug}` : ''}`;
+const formatCollectionUrl = slug => `${HOST}/stream${slug ? `/${slug}` : ''}`;
 
 const { FacebookShareButton, TwitterShareButton, EmailShareButton } = ShareButtons;
 
@@ -61,8 +61,8 @@ export default class extends Section {
   };
 
   renderNewsletter(content) {
-    const { contact } = this.state;
-    const { message } = this.state.form;
+    const { contact, form } = this.state;
+    const { message } = form;
 
     return <span>
       <h3>Newsletter</h3>
@@ -73,10 +73,11 @@ export default class extends Section {
   }
 
   renderShare() {
-    let { collection } = this.props;
-    collection = { ...home, ...collection };
-    const { slug } = collection;
+    let { collection, params } = this.props;
+    const { slug } = params;
     const url = formatCollectionUrl(slug);
+
+    collection = collection && params.slug ? collection : home;
 
     return (<div className="share">
       <FacebookShareButton url={`${url}`}>
@@ -93,6 +94,7 @@ export default class extends Section {
 
   render() {
     let { collection, params } = this.props;
+
     collection = collection && params.slug ? collection : home;
 
     return (
