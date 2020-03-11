@@ -5,7 +5,7 @@ import {ShareButtons} from 'react-share';
 import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
 import {update} from '@boilerplatejs/hubspot/actions/Contact';
-import * as forms from '@boilerplatejs/core/components/forms';
+import * as forms from '@fox-zero/web/components/forms';
 import {Error} from '@boilerplatejs/core/components/sections';
 import moment from 'moment';
 

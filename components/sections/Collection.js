@@ -6,7 +6,7 @@ import ReactGA from 'react-ga';
 import {Section} from '@boilerplatejs/core/components/layout';
 import {update} from '@boilerplatejs/hubspot/actions/Contact';
 import {home} from '@fox-zero/content/data';
-import * as forms from '@boilerplatejs/core/components/forms';
+import * as forms from '@fox-zero/web/components/forms';
 
 const HOST = 'https://foxzero.io';
 
